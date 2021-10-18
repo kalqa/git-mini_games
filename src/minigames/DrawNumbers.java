@@ -3,18 +3,23 @@ package minigames;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class DrawNumbers extends Game implements GameInterface {
+public class DrawNumbers implements GameInterface {
 
+    private boolean gameStared = false;
+    private boolean gamePrepared = false;
+    private boolean gameToEnd = false;
+    private final String name;
+    private final String description;
     private final int amountOfNumbers = 6;
     private final int lowestNumber = 1;
     private final int highestNumber = 99;
-
-    int[] correctNumbers = new int[amountOfNumbers];
-    int[] typedNumbers = new int[amountOfNumbers];
+    int[] drawnNumbers = new int[amountOfNumbers];
+    int[] selectedUserNumbers = new int[amountOfNumbers];
     Scanner scanner = new Scanner(System.in);
 
     public DrawNumbers(String name, String description) {
-        super(name, description);
+        this.name = name;
+        this.description = description;
     }
 
     public void operateGame() {
@@ -38,44 +43,56 @@ public class DrawNumbers extends Game implements GameInterface {
         System.out.println("Każdą wytypowaną liczbę zatwierdź ENTERem.");
         System.out.println("Wciśnij ENTER aby rozpocząć grę");
         scanner.nextLine();
+        scanner.close();
         System.out.println("Powodzenia :)");
         return true;
     }
 
     @Override
     public boolean prepareGame() {
-        //losowanie liczb
+        drawNumbers();
+        sortDrawnNumbers();
+        return true;
+    }
+
+    public void drawNumbers() {
+        int randomNumber = (int) (Math.random() * 100);
         for (int i = 0; i < amountOfNumbers; i++) {
-            int randomNumber = (int) (Math.random() * 100);
-            for (int number : correctNumbers) {
+            for (int number : drawnNumbers) {
                 if (randomNumber == number) {
                     i--;
                 } else {
-                    correctNumbers[i] = randomNumber;
+                    drawnNumbers[i] = randomNumber;
                 }
                 break;
             }
         }
+    }
 
-        //sortowanie liczb wylosowanych
-        Arrays.sort(correctNumbers);
-        for (int number : correctNumbers) {
+    public void sortDrawnNumbers() {
+        Arrays.sort(drawnNumbers);
+        for (int number : drawnNumbers) {
             System.out.println(number);
         }
-        return true;
     }
 
     @Override
     public boolean playGame() {
+        selectingNumbersByUserAndCheckingInputError();
+        sortSelectedUserNumbers();
+        return true;
+    }
+
+    private void selectingNumbersByUserAndCheckingInputError() {
         for (int i = 0; i < amountOfNumbers; i++) {
             System.out.println("Podaj " + (i + 1) + " liczbę");
             int typedNumber = scanner.nextInt();
+            scanner.close();
             boolean addNumber = true;
 
-            //sprawdzenie czy nie powtórzono typu
             for (int j = 0; j < i; j++) {
-                if (typedNumber == typedNumbers[j]) {
-                    System.out.println("Wytypowałeś już te liczbę wcześniej");
+                if (typedNumber == selectedUserNumbers[j]) {
+                    System.out.println("Wytypowałeś już tę liczbę wcześniej");
                     System.out.println("Spróbuj jeszcze raz");
                     i--;
                     addNumber = false;
@@ -83,7 +100,6 @@ public class DrawNumbers extends Game implements GameInterface {
                 }
             }
 
-            //sprawdzenie czy wytypowana liczba jest po za zakresem lub ujemna
             if (typedNumber < lowestNumber || typedNumber > highestNumber) {
                 System.out.println("Wytypowałeś liczbę spoza zakresu");
                 System.out.println("Spróbuj jeszcze raz");
@@ -91,39 +107,50 @@ public class DrawNumbers extends Game implements GameInterface {
                 i--;
             }
             if (addNumber) {
-                typedNumbers[i] = typedNumber;
+                selectedUserNumbers[i] = typedNumber;
             }
         }
-        //sortowanie liczb wytypowanych
-        Arrays.sort(typedNumbers);
-        return true;
+    }
+
+    private void sortSelectedUserNumbers() {
+        Arrays.sort(selectedUserNumbers);
     }
 
     @Override
     public void endGame() {
+        compareDrawnAndSelectedUserNumbers();
+        printDrawnNumbers();
+        printSelectedUserNumbers();
+    }
+
+    private void compareDrawnAndSelectedUserNumbers() {
         for (int i = 0; i < amountOfNumbers; i++) {
-            if (typedNumbers[i] != correctNumbers[i]) {
+            if (selectedUserNumbers[i] != drawnNumbers[i]) {
                 System.out.println("Pudło. Niestety, nie trafiłeś w wylosowane liczby");
                 break;
-            } else if (i == (amountOfNumbers - 1) && typedNumbers[i] == correctNumbers[i]) {
+            } else if (i == (amountOfNumbers - 1) && selectedUserNumbers[i] == drawnNumbers[i]) {
                 System.out.println("Wygrałeś. Trafiłeś/aś we wszystkie wylosowane liczby");
             }
         }
+    }
 
+    private void printDrawnNumbers() {
         for (int i = 0; i < amountOfNumbers; i++) {
-            if (correctNumbers[i] < 10) {
-                System.out.print("0" + correctNumbers[i] + " ");
+            if (drawnNumbers[i] < 10) {
+                System.out.print("0" + drawnNumbers[i] + " ");
             } else {
-                System.out.print(correctNumbers[i] + " ");
+                System.out.print(drawnNumbers[i] + " ");
             }
         }
         System.out.println("- to wylosowane liczby");
+    }
 
+    private void printSelectedUserNumbers() {
         for (int i = 0; i < amountOfNumbers; i++) {
-            if (typedNumbers[i] < 10) {
-                System.out.print("0" + typedNumbers[i] + " ");
+            if (selectedUserNumbers[i] < 10) {
+                System.out.print("0" + selectedUserNumbers[i] + " ");
             } else {
-                System.out.print(typedNumbers[i] + " ");
+                System.out.print(selectedUserNumbers[i] + " ");
             }
         }
         System.out.println("- to Twoje wytypowane liczby");
