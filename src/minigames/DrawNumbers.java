@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class DrawNumbers extends Game implements GameInterface {
 
-    private static int amountOfNumbers = 6;
-    private static int lowestNumber = 1;
-    private static int highestNumber = 99;
+    private final int amountOfNumbers = 6;
+    private final int lowestNumber = 1;
+    private final int highestNumber = 99;
 
     int[] correctNumbers = new int[amountOfNumbers];
     int[] typedNumbers = new int[amountOfNumbers];
