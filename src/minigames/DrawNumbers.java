@@ -5,8 +5,12 @@ import java.util.Scanner;
 
 public class DrawNumbers extends Game implements GameInterface {
 
-    int[] correctNumbers = new int[6];
-    int[] typedNumbers = new int[6];
+    private static int amountOfNumbers = 6;
+    private static int lowestNumber = 1;
+    private static int highestNumber = 99;
+
+    int[] correctNumbers = new int[amountOfNumbers];
+    int[] typedNumbers = new int[amountOfNumbers];
     Scanner scanner = new Scanner(System.in);
 
     public DrawNumbers(String name, String description) {
@@ -41,7 +45,7 @@ public class DrawNumbers extends Game implements GameInterface {
     @Override
     public boolean prepareGame() {
         //losowanie liczb
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < amountOfNumbers; i++) {
             int randomNumber = (int) (Math.random() * 100);
             for (int number : correctNumbers) {
                 if (randomNumber == number) {
@@ -63,7 +67,7 @@ public class DrawNumbers extends Game implements GameInterface {
 
     @Override
     public boolean playGame() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < amountOfNumbers; i++) {
             System.out.println("Podaj " + (i + 1) + " liczbę");
             int typedNumber = scanner.nextInt();
             boolean addNumber = true;
@@ -80,18 +84,12 @@ public class DrawNumbers extends Game implements GameInterface {
             }
 
             //sprawdzenie czy wytypowana liczba jest po za zakresem lub ujemna
-            if (typedNumber < 0) {
-                System.out.println("Wytypowałeś ujemną liczbę");
-                System.out.println("Spróbuj jeszcze raz");
-                addNumber = false;
-                i--;
-            } else if (typedNumber == 0 || typedNumber > 99) {
+            if (typedNumber < lowestNumber || typedNumber > highestNumber) {
                 System.out.println("Wytypowałeś liczbę spoza zakresu");
                 System.out.println("Spróbuj jeszcze raz");
                 addNumber = false;
                 i--;
             }
-
             if (addNumber) {
                 typedNumbers[i] = typedNumber;
             }
@@ -103,16 +101,16 @@ public class DrawNumbers extends Game implements GameInterface {
 
     @Override
     public void endGame() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < amountOfNumbers; i++) {
             if (typedNumbers[i] != correctNumbers[i]) {
                 System.out.println("Pudło. Niestety, nie trafiłeś w wylosowane liczby");
                 break;
-            } else if (i == 5 && typedNumbers[i] == correctNumbers[i]) {
+            } else if (i == (amountOfNumbers - 1) && typedNumbers[i] == correctNumbers[i]) {
                 System.out.println("Wygrałeś. Trafiłeś/aś we wszystkie wylosowane liczby");
             }
         }
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < amountOfNumbers; i++) {
             if (correctNumbers[i] < 10) {
                 System.out.print("0" + correctNumbers[i] + " ");
             } else {
@@ -121,7 +119,7 @@ public class DrawNumbers extends Game implements GameInterface {
         }
         System.out.println("- to wylosowane liczby");
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < amountOfNumbers; i++) {
             if (typedNumbers[i] < 10) {
                 System.out.print("0" + typedNumbers[i] + " ");
             } else {
