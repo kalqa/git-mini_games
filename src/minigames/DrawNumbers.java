@@ -5,9 +5,6 @@ import java.util.Scanner;
 
 public class DrawNumbers implements GameInterface {
 
-    private boolean gameStared = false;
-    private boolean gamePrepared = false;
-    private boolean gameToEnd = false;
     private final String name;
     private final String description;
     private final int amountOfNumbers = 6;
@@ -23,41 +20,31 @@ public class DrawNumbers implements GameInterface {
     }
 
     public void operateGame() {
-        if (this.startGame()) {
-            gamePrepared = this.prepareGame();
-        }
-
-        if (gamePrepared) {
-            gameToEnd = this.playGame();
-        }
-
-        if (gameToEnd) {
-            DrawNumbers.this.endGame();
-        }
+        startGame();
+        prepareGame();
+        playGame();
+        endGame();
     }
 
     @Override
-    public boolean startGame() {
+    public void startGame() {
         System.out.println("Witaj w grze Lotek.");
         System.out.println("Wpisz kolejno 6 wytypowanych przez Ciebie liczb pomiędzy 1-99");
         System.out.println("Każdą wytypowaną liczbę zatwierdź ENTERem.");
         System.out.println("Wciśnij ENTER aby rozpocząć grę");
         scanner.nextLine();
-        scanner.close();
         System.out.println("Powodzenia :)");
-        return true;
     }
 
     @Override
-    public boolean prepareGame() {
+    public void prepareGame() {
         drawNumbers();
         sortDrawnNumbers();
-        return true;
     }
 
     public void drawNumbers() {
-        int randomNumber = (int) (Math.random() * 100);
         for (int i = 0; i < amountOfNumbers; i++) {
+            int randomNumber = (int) (Math.random() * 100);
             for (int number : drawnNumbers) {
                 if (randomNumber == number) {
                     i--;
@@ -71,23 +58,18 @@ public class DrawNumbers implements GameInterface {
 
     public void sortDrawnNumbers() {
         Arrays.sort(drawnNumbers);
-        for (int number : drawnNumbers) {
-            System.out.println(number);
-        }
     }
 
     @Override
-    public boolean playGame() {
+    public void playGame() {
         selectingNumbersByUserAndCheckingInputError();
         sortSelectedUserNumbers();
-        return true;
     }
 
     private void selectingNumbersByUserAndCheckingInputError() {
         for (int i = 0; i < amountOfNumbers; i++) {
             System.out.println("Podaj " + (i + 1) + " liczbę");
             int typedNumber = scanner.nextInt();
-            scanner.close();
             boolean addNumber = true;
 
             for (int j = 0; j < i; j++) {
@@ -101,7 +83,7 @@ public class DrawNumbers implements GameInterface {
             }
 
             if (typedNumber < lowestNumber || typedNumber > highestNumber) {
-                System.out.println("Wytypowałeś liczbę spoza zakresu");
+                System.out.println("Wytypowałeś liczbę spoza zakresu " + lowestNumber + "-" + highestNumber);
                 System.out.println("Spróbuj jeszcze raz");
                 addNumber = false;
                 i--;

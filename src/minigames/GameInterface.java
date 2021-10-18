@@ -4,11 +4,11 @@ public interface GameInterface {
 
     public void operateGame();
 
-    public boolean startGame();
+    public void startGame();
 
-    public boolean playGame();
+    public void playGame();
 
-    public boolean prepareGame();
+    public void prepareGame();
 
     public void endGame();
 }
