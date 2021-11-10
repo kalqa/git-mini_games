@@ -101,11 +101,9 @@ public class DrawNumbers implements GameInterface {
     private boolean ifTypedNumberIsOutOfRange(int typedNumber, int lowestNumber, int highestNumber) {
         if (typedNumber < lowestNumber) {
             return true;
-        }
-        else if (typedNumber > highestNumber) {
+        } else if (typedNumber > highestNumber) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -139,6 +137,8 @@ public class DrawNumbers implements GameInterface {
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 
