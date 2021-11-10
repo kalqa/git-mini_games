@@ -11,11 +11,12 @@ public class DrawNumbers implements GameInterface {
     private final int highestNumber = 99;
     List<Integer> drawnNumbers = new ArrayList<>();
     List<Integer> selectedUserNumbers = new ArrayList<>();
-    Scanner scanner = new Scanner(System.in);
+    InputReceiver inputReceiver;
 
-    public DrawNumbers(String name, String description) {
+    public DrawNumbers(String name, String description, InputReceiver inputReceiver) {
         this.name = name;
         this.description = description;
+        this.inputReceiver = inputReceiver;
     }
 
     public void operateGame() {
@@ -31,7 +32,7 @@ public class DrawNumbers implements GameInterface {
         System.out.println("Wpisz kolejno 6 wytypowanych przez Ciebie liczb pomiędzy 1-99");
         System.out.println("Każdą wytypowaną liczbę zatwierdź ENTERem.");
         System.out.println("Wciśnij ENTER aby rozpocząć grę");
-        scanner.nextLine();
+        inputReceiver.nextLine();
         System.out.println("Powodzenia :)");
     }
 
@@ -74,7 +75,7 @@ public class DrawNumbers implements GameInterface {
     private void selectingNumbersByUserAndCheckingInputError() {
         for (int i = 0; i < amountOfNumbers; i++) {
             System.out.println("Podaj " + (i + 1) + " liczbę");
-            int typedNumber = scanner.nextInt();
+            int typedNumber = inputReceiver.nextInt();
             boolean ifAddSelectedNumber = true;
             for (int number : selectedUserNumbers) {
                 if (number == typedNumber) {
