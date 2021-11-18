@@ -3,10 +3,12 @@ package minigames;
 import java.util.List;
 
 import static minigames.GameConfiguration.AMOUNT_OF_NUMBERS;
+import static minigames.Messages.LOST_INFORMATION;
+import static minigames.Messages.WIN_INFORMATION;
 
 public class GameResult {
 
-    boolean comparingNumbersAndShowWinOrLose(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
+    boolean ifDrawnNumbersEqualsSelectedUserNumbers(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
 
         printDrawnNumbers();
         printSelectedUserNumbers();
@@ -18,15 +20,15 @@ public class GameResult {
     }
 
     private winOrLose
-    compareDrawnAndSelectedUserNumbers();
+    ifDrawnNumbersEqualsSelectedUserNumbers();
 
-    private boolean compareDrawnAndSelectedUserNumbers(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
+    private boolean ifDrawnNumbersEqualsSelectedUserNumbers(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             if (selectedUserNumbers.get(i) != drawnNumbers.get(i)) {
-                //System.out.println("Pudło. Niestety, nie trafiłeś w wylosowane liczby");
+                System.out.println(LOST_INFORMATION);
                 return false;
             } else if (ifLastSelectedUserNumberEqualsDrawnNumber(i, AMOUNT_OF_NUMBERS, selectedUserNumbers, drawnNumbers)) {
-                //System.out.println("Wygrałeś. Trafiłeś/aś we wszystkie wylosowane liczby");
+                System.out.println(WIN_INFORMATION);
                 return true;
             }
         }
@@ -52,7 +54,8 @@ public class GameResult {
                 System.out.print(drawnNumbers.get(i) + " ");
             }
         }
-        System.out.println("- to wylosowane liczby");
+        return
+                System.out.println("- to wylosowane liczby");
     }
 
     private void printSelectedUserNumbers() {
@@ -65,4 +68,5 @@ public class GameResult {
         }
         System.out.println("- to Twoje wytypowane liczby");
     }
+
 }

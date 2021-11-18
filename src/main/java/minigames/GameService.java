@@ -13,8 +13,7 @@ public class GameService {
         welcomeAndWaitForUserToStart();
         List<Integer> selectedUserNumbers = selectNumbers.selectingNumbersByUser();
         List<Integer> drawnNumbers = drawNumbers.drawingNumbers();
-        boolean winOrLost = gameResult.comparingNumbersAndShowWinOrLose(selectedUserNumbers, drawnNumbers);
-        printResult();
+        boolean winOrLost = gameResult.checkResultAndPrintMessage(selectedUserNumbers, drawnNumbers);
     }
 
     private boolean welcomeAndWaitForUserToStart() {
