@@ -36,17 +36,12 @@ public class DrawNumbers {
                 drawnNumbers.add(i, randomNumber);
             }
         }
-        for (int number : drawnNumbers) {
-            System.out.println(number);
-        }
         return drawnNumbers;
     }
 
     private void sortNumbers(List<Integer> unsortedList) {
         Collections.sort(unsortedList);
     }
-
-
 }
 
 

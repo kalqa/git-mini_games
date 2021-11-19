@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 import static minigames.GameConfiguration.*;
-import static minigames.GameConfiguration.HIGHEST_NUMBER;
+import static minigames.Messages.*;
 
 public class SelectUserNumbers {
 
-    List<Integer> selectedUserNumbers = new ArrayList<>();
     InputReceiver inputReceiver = new InputReceiverScanner();
+    List<Integer> selectedUserNumbers = new ArrayList<>();
 
     public SelectUserNumbers() {
     }
@@ -23,22 +23,20 @@ public class SelectUserNumbers {
 
     private List<Integer> selectingNumbersByUserAndCheckingInputError() {
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
-            System.out.println("Podaj " + (i + 1) + " liczbę");
+            System.out.println(WRITE_NUMBER + (i + 1) + ":");
             int typedNumber = inputReceiver.nextInt();
 
             boolean ifAddSelectedNumber = true;
             for (int number : selectedUserNumbers) {
                 if (number == typedNumber) {
-                    System.out.println("Wytypowałeś już tę liczbę wcześniej");
-                    System.out.println("Spróbuj jeszcze raz");
+                    System.out.println(NUMBER_SELECTED_BEFORE);
                     i--;
                     ifAddSelectedNumber = false;
                     break;
                 }
             }
             if (ifTypedNumberIsOutOfRange(typedNumber, LOWEST_NUMBER, HIGHEST_NUMBER)) {
-                System.out.println("Wytypowałeś liczbę spoza zakresu " + LOWEST_NUMBER + "-" + HIGHEST_NUMBER);
-                System.out.println("Spróbuj jeszcze raz");
+                System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
                 ifAddSelectedNumber = false;
                 i--;
             }
