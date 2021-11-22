@@ -16,31 +16,21 @@ public class SelectUserNumbers {
     }
 
     List<Integer> selectingNumbersByUser() {
-        selectedUserNumbers = selectingNumbersByUserAndCheckingInputError();
+        selectingNumbersByUserAndCheckingInputError();
         sortNumbers(selectedUserNumbers);
         return selectedUserNumbers;
     }
 
-    private List<Integer> selectingNumbersByUserAndCheckingInputError() {
+    List<Integer> selectingNumbersByUserAndCheckingInputError() {
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             System.out.println(WRITE_NUMBER + (i + 1) + ":");
             int typedNumber = inputReceiver.nextInt();
-
             boolean ifAddSelectedNumber = true;
-            for (int number : selectedUserNumbers) {
-                if (number == typedNumber) {
-                    System.out.println(NUMBER_SELECTED_BEFORE);
-                    i--;
-                    ifAddSelectedNumber = false;
-                    break;
-                }
-            }
-            if (ifTypedNumberIsOutOfRange(typedNumber, LOWEST_NUMBER, HIGHEST_NUMBER)) {
-                System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
+
+            if (ifTypedNumberSelectedBefore(typedNumber) || ifTypedNumberIsOutOfRange(typedNumber, LOWEST_NUMBER, HIGHEST_NUMBER)) {
                 ifAddSelectedNumber = false;
                 i--;
             }
-
             if (ifAddSelectedNumber) {
                 selectedUserNumbers.add(i, typedNumber);
             }
@@ -48,17 +38,25 @@ public class SelectUserNumbers {
         return selectedUserNumbers;
     }
 
-    private boolean ifTypedNumberIsOutOfRange(int typedNumber, int LOWEST_NUMBER, int HIGHEST_NUMBER) {
-        if (typedNumber < LOWEST_NUMBER) {
-            return true;
-        } else if (typedNumber > HIGHEST_NUMBER) {
-            return true;
-        } else {
-            return false;
+    boolean ifTypedNumberSelectedBefore(int typedNumber) {
+        for (int number : selectedUserNumbers) {
+            if (number == typedNumber) {
+                System.out.println(NUMBER_SELECTED_BEFORE);
+                return true;
+            }
         }
+        return false;
     }
 
-    private void sortNumbers(List<Integer> unsortedList) {
+    boolean ifTypedNumberIsOutOfRange(int typedNumber, int LOWEST_NUMBER, int HIGHEST_NUMBER) {
+        if (typedNumber < LOWEST_NUMBER || typedNumber > HIGHEST_NUMBER) {
+            System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
+            return true;
+        }
+        return false;
+    }
+
+    void sortNumbers(List<Integer> unsortedList) {
         Collections.sort(unsortedList);
     }
 }

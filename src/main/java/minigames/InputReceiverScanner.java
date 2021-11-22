@@ -11,9 +11,8 @@ public class InputReceiverScanner implements InputReceiver {
     }
 
     @Override
-    public String nextLine() {
-        return scanner.nextLine();
+    public boolean enterButton() {
+        scanner.nextLine();
+        return true;
     }
-
-
 }

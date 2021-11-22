@@ -15,22 +15,19 @@ public class DrawNumbers {
     }
 
     List<Integer> drawingNumbers() {
-        drawnNumbers = drawNumbers();
+        drawNumbers();
         sortNumbers(drawnNumbers);
         return drawnNumbers;
     }
 
-    private List<Integer> drawNumbers() {
-        List<Integer> drawnNumbers = new ArrayList<>();
+    List<Integer> drawNumbers() {
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             int randomNumber = (int) (Math.random() * RANDOM_NUMBER_BOUND);
             boolean ifAddDrawnNumber = true;
-            for (int number : drawnNumbers) {
-                if (number == randomNumber) {
-                    i--;
-                    ifAddDrawnNumber = false;
-                    break;
-                }
+
+            if (ifActualRandomNumberWasDrawnBefore(randomNumber)) {
+                ifAddDrawnNumber = false;
+                i--;
             }
             if (ifAddDrawnNumber) {
                 drawnNumbers.add(i, randomNumber);
@@ -39,7 +36,16 @@ public class DrawNumbers {
         return drawnNumbers;
     }
 
-    private void sortNumbers(List<Integer> unsortedList) {
+    private boolean ifActualRandomNumberWasDrawnBefore(int randomNumber) {
+        for (int number : drawnNumbers) {
+            if (number == randomNumber) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void sortNumbers (List < Integer > unsortedList) {
         Collections.sort(unsortedList);
     }
 }

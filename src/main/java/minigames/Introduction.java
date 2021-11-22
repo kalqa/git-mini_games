@@ -7,10 +7,9 @@ public class Introduction {
 
     InputReceiver inputReceiverScanner = new InputReceiverScanner();
 
-    boolean welcomeAndWaitForUserToStart() {
+    void welcomeAndWaitForUserToStart() {
         System.out.println(INTRODUCTION);
-        inputReceiverScanner.nextLine();
+        inputReceiverScanner.enterButton();
         System.out.println(GAME_ENTERED);
-        return true;
     }
 }
