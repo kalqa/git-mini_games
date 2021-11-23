@@ -6,5 +6,4 @@ public class GameConfiguration {
     public static final int HIGHEST_NUMBER = 99;
     public static final int AMOUNT_OF_NUMBERS = 6;
     public static final int RANDOM_NUMBER_BOUND = 100;
-
 }

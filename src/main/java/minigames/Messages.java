@@ -1,11 +1,13 @@
 package minigames;
 
+import static minigames.GameConfiguration.*;
+
 public class Messages {
 
     public static final String LOST_INFORMATION = "Pudło. Niestety, nie trafiłeś w wylosowane liczby";
     public static final String WIN_INFORMATION = "Wygrałeś. Trafiłeś/aś we wszystkie wylosowane liczby";
     public static final String INTRODUCTION = "Witaj w grze Lotek. " +
-            "\n Wpisz kolejno 6 wytypowanych przez Ciebie liczb pomiędzy 1-99. " +
+            "\n Wpisz kolejno " + AMOUNT_OF_NUMBERS + " wytypowanych przez Ciebie liczb pomiędzy " + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + "." +
             "\n Każdą wytypowaną liczbę zatwierdź ENTERem." +
             "\n Wciśnij ENTER aby rozpocząć grę.";
     public static final String GAME_ENTERED = "Powodzenia :)";
