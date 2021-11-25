@@ -1,6 +1,5 @@
 package minigames;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -9,13 +8,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import static minigames.GameConfiguration.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class SelectUserNumbersTests {
 
     @Test
-    public void should_check_NOT_null_resultList() {
+    void should_check_NOT_null_resultList() {
         //given
         SelectUserNumbers selectUserNumbers = Mockito.mock(SelectUserNumbers.class);
         //when
@@ -25,31 +27,12 @@ class SelectUserNumbersTests {
         assertNotNull(resultList);
     }
 
-    @Disabled
-    public void should_return_user_numbers_list() {
-        //given
-        SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
-        InputReceiver inputReceiver = new InputReceiverScanner();
-        List<Integer> seriesOfTypedNumbers = new ArrayList<>(Arrays.asList(1, 1, 3, 4, 5, 6));
-        //for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
-
-        given(inputReceiver.nextInt()).willReturn(seriesOfTypedNumbers.get(0));
-        selectUserNumbers.selectingNumbersByUserAndCheckingInputError();
-        given(inputReceiver.nextInt()).willReturn(seriesOfTypedNumbers.get(1));
-        List<Integer> result =  selectUserNumbers.selectingNumbersByUserAndCheckingInputError();
-
-        //when
-
-        //expected
-        assertEquals(result, Arrays.asList(1, 2, 3, 4, 5, 6));
-    }
-
     @Test
-    public void should_return_of_user_numbers_list() {
+    public void should_Return_of_user_numbers_list_of_size_6() {
         //given
         SelectUserNumbers selectUserNumbers = Mockito.mock(SelectUserNumbers.class);
         List<Integer> selectedUserNumbers = new ArrayList<>();
-        given(selectUserNumbers.selectingNumbersByUser()).willReturn(preparedMockMethodFor_ReturnListOfUserNumbers());
+        given(selectUserNumbers.selectingNumbersByUser()).willReturn(Arrays.asList(1, 2, 3, 4, 5, 6));
         //when
         List<Integer> resultList = selectUserNumbers.selectingNumbersByUser();
         int resultSize = resultList.size();
@@ -57,9 +40,68 @@ class SelectUserNumbersTests {
         assertEquals(resultSize, 6);
     }
 
-    private List<Integer> preparedMockMethodFor_ReturnListOfUserNumbers() {
-        List<Integer> mockSelectedUserNumbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
-        return mockSelectedUserNumbers;
+    @Test
+    void typed_in_range_numbers_and_not_repeated_Return_numbers_list() {
+        //given
+        SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
+
+        InputReceiver inputReceiverMock = mock(InputReceiver.class);
+        selectUserNumbers.inputReceiver = inputReceiverMock;
+        given(selectUserNumbers.inputReceiver.nextInt()).willReturn(1,2, 3, 4, 5, 6);
+
+        //when
+        List<Integer> result =  selectUserNumbers.selectingNumbersByUserAndCheckingInputError();
+
+        //expected
+        assertThat(result, is(Arrays.asList(1, 2, 3, 4, 5, 6)));
+    }
+
+    @Test
+    void when_typed_repeated_number_Return_NOT_doubled_numbers_list() {
+        //given
+        SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
+
+        InputReceiver inputReceiverMock = mock(InputReceiver.class);
+        selectUserNumbers.inputReceiver = inputReceiverMock;
+        given(selectUserNumbers.inputReceiver.nextInt()).willReturn(90,91, 91, 92, 93, 94, 95);
+
+        //when
+        List<Integer> result =  selectUserNumbers.selectingNumbersByUserAndCheckingInputError();
+
+        //expected
+        assertThat(result, is(Arrays.asList(90, 91, 92, 93, 94, 95)));
+    }
+
+    @Test
+    void when_typed_out_of_range_number_Return_numbers_list_which_not_contains_this_number() {
+        //given
+        SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
+
+        InputReceiver inputReceiverMock = mock(InputReceiver.class);
+        selectUserNumbers.inputReceiver = inputReceiverMock;
+        given(selectUserNumbers.inputReceiver.nextInt()).willReturn(5, 15, 150, 25, 35, 45, 55);
+
+        //when
+        List<Integer> result =  selectUserNumbers.selectingNumbersByUserAndCheckingInputError();
+
+        //expected
+        assertThat(result, is(Arrays.asList(5, 15, 25, 35, 45, 55)));
+    }
+
+    @Test
+    void when_typed_out_of_range_or_doubled_number_Return_numbers_list_which_not_contains_this_number() {
+        //given
+        SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
+
+        InputReceiver inputReceiverMock = mock(InputReceiver.class);
+        selectUserNumbers.inputReceiver = inputReceiverMock;
+        given(selectUserNumbers.inputReceiver.nextInt()).willReturn(11, 11, -5, 22, 33, 33, 205, 44, 44, 55, 66);
+
+        //when
+        List<Integer> result =  selectUserNumbers.selectingNumbersByUserAndCheckingInputError();
+
+        //expected
+        assertThat(result, is(Arrays.asList(11, 22, 33, 44, 55, 66)));
     }
 
     @Test

@@ -12,44 +12,32 @@ class InputReceiverScannerTests {
     public void should_return_positive_int() {
         //given
         InputReceiverScanner inputReceiverScanner = Mockito.mock(InputReceiverScanner.class);
-        given(inputReceiverScanner.nextInt()).willReturn(preparedMockMethodForReturnPositiveInt());
+        given(inputReceiverScanner.nextInt()).willReturn(5);
         //when
         int result = inputReceiverScanner.nextInt();
         //expected
         assertEquals(result, 5);
     }
 
-    private int preparedMockMethodForReturnPositiveInt() {
-        return 5;
-    }
-
     @Test
     public void should_return_negative_int() {
         //given
         InputReceiverScanner inputReceiverScanner = Mockito.mock(InputReceiverScanner.class);
-        given(inputReceiverScanner.nextInt()).willReturn(preparedMockMethodForReturnNegativeInt());
+        given(inputReceiverScanner.nextInt()).willReturn(-14);
         //when
         int result = inputReceiverScanner.nextInt();
         //expected
         assertEquals(result, -14);
     }
 
-    private int preparedMockMethodForReturnNegativeInt() {
-        return -14;
-    }
-
     @Test
     public void should_return_true() {
         //given
         InputReceiverScanner inputReceiverScanner = Mockito.mock(InputReceiverScanner.class);
-        given(inputReceiverScanner.enterButton()).willReturn(preparedMockMethodForReturnTrue());
+        given(inputReceiverScanner.enterButton()).willReturn(true);
         //when
         boolean result = inputReceiverScanner.enterButton();
         //expected
         assertEquals(result, true);
-    }
-
-    private boolean preparedMockMethodForReturnTrue() {
-        return true;
     }
 }
