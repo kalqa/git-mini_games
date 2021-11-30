@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DrawNumbersTests {
 
     @Test
-    public void should_check_NOT_null_resultList() {
+    void should_check_NOT_null_resultList() {
         //given
         DrawNumbers drawNumbers = new DrawNumbers();
         //when
@@ -20,7 +20,7 @@ class DrawNumbersTests {
     }
 
     @Test
-    public void should_return_size_of_drawnNumbersList() {
+    void should_return_size_of_drawnNumbersList() {
         //given
         DrawNumbers drawNumbers = new DrawNumbers();
         //when
@@ -31,7 +31,7 @@ class DrawNumbersTests {
     }
 
     @Test
-    public void should_drawnNumber_be_always_IN_range() {
+    void should_drawnNumber_be_always_IN_range() {
         //given
         DrawNumbers drawNumbers = new DrawNumbers();
         //when

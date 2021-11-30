@@ -28,7 +28,7 @@ class SelectUserNumbersTests {
     }
 
     @Test
-    public void should_Return_of_user_numbers_list_of_size_6() {
+    void should_Return_of_user_numbers_list_of_size_6() {
         //given
         SelectUserNumbers selectUserNumbers = Mockito.mock(SelectUserNumbers.class);
         List<Integer> selectedUserNumbers = new ArrayList<>();
@@ -105,7 +105,7 @@ class SelectUserNumbersTests {
     }
 
     @Test
-    public void test_number_is_NOT_IN_range_Higher() {
+    void test_number_is_NOT_IN_range_Higher() {
         //given
         SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
         int typedNumber = 100;
@@ -116,7 +116,7 @@ class SelectUserNumbersTests {
     }
 
     @Test
-    public void test_number_is_NOT_IN_range_Lower () {
+    void test_number_is_NOT_IN_range_Lower () {
         //given
         SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
         int typedNumber = -2;
@@ -127,7 +127,7 @@ class SelectUserNumbersTests {
     }
 
     @Test
-    public void test_number_is_IN_range () {
+    void test_number_is_IN_range () {
         //given
         SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
         int typedNumber = 50;
@@ -138,7 +138,7 @@ class SelectUserNumbersTests {
     }
 
     @Test
-    public void test_number_WAS_selected_before () {
+    void test_number_WAS_selected_before () {
         //given
         SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
         selectUserNumbers.selectedUserNumbers.add(50);
@@ -150,7 +150,7 @@ class SelectUserNumbersTests {
     }
 
     @Test
-    public void test_number_WAS_NOT_selected_before () {
+    void test_number_WAS_NOT_selected_before () {
         //given
         SelectUserNumbers selectUserNumbers = new SelectUserNumbers();
         selectUserNumbers.selectedUserNumbers.add(99);

@@ -9,7 +9,7 @@ import static org.mockito.BDDMockito.*;
 class InputReceiverScannerTests {
 
     @Test
-    public void should_return_positive_int() {
+    void should_return_positive_int() {
         //given
         InputReceiverScanner inputReceiverScanner = Mockito.mock(InputReceiverScanner.class);
         given(inputReceiverScanner.nextInt()).willReturn(5);
@@ -20,7 +20,7 @@ class InputReceiverScannerTests {
     }
 
     @Test
-    public void should_return_negative_int() {
+    void should_return_negative_int() {
         //given
         InputReceiverScanner inputReceiverScanner = Mockito.mock(InputReceiverScanner.class);
         given(inputReceiverScanner.nextInt()).willReturn(-14);
@@ -31,7 +31,7 @@ class InputReceiverScannerTests {
     }
 
     @Test
-    public void should_return_true() {
+    void should_return_true() {
         //given
         InputReceiverScanner inputReceiverScanner = Mockito.mock(InputReceiverScanner.class);
         given(inputReceiverScanner.enterButton()).willReturn(true);
