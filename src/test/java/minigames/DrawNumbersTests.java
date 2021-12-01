@@ -37,15 +37,13 @@ class DrawNumbersTests {
         //when
         List<Integer> resultList = drawNumbers.drawNumbers();
         int drawnNumber = resultList.get(3);
-        boolean result = preparedMethod_ifNumberIsInRange(drawnNumber);
+        boolean result = isInRange(drawnNumber);
         //expected
         assertTrue(result);
     }
 
-    private boolean preparedMethod_ifNumberIsInRange (int drawnNumber) {
-        if (drawnNumber >= LOWEST_NUMBER && drawnNumber <= HIGHEST_NUMBER) {
-            return true;
-        }
-        return false;
+    // czy w testach jest metoda ktora powinna byc w logice biznesowej?
+    private boolean isInRange(int drawnNumber) {
+        return (drawnNumber >= LOWEST_NUMBER) && (drawnNumber <= HIGHEST_NUMBER);
     }
 }

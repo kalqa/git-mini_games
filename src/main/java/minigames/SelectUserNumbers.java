@@ -7,6 +7,7 @@ import java.util.List;
 import static minigames.GameConfiguration.*;
 import static minigames.Messages.*;
 
+//UserNumberSelector
 public class SelectUserNumbers {
 
     InputReceiver inputReceiver = new InputReceiverScanner();
@@ -21,7 +22,7 @@ public class SelectUserNumbers {
         return selectedUserNumbers;
     }
 
-    List<Integer> selectingNumbersByUserAndCheckingInputError() {
+    private List<Integer> selectingNumbersByUserAndCheckingInputError() {
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             System.out.println(WRITE_NUMBER + (i + 1) + ":");
             int typedNumber = inputReceiver.nextInt();
@@ -38,7 +39,7 @@ public class SelectUserNumbers {
         return selectedUserNumbers;
     }
 
-    boolean ifTypedNumberSelectedBefore(int typedNumber) {
+    private boolean ifTypedNumberSelectedBefore(int typedNumber) {
         for (int number : selectedUserNumbers) {
             if (number == typedNumber) {
                 System.out.println(NUMBER_SELECTED_BEFORE);
@@ -48,7 +49,7 @@ public class SelectUserNumbers {
         return false;
     }
 
-    boolean ifTypedNumberIsOutOfRange(int typedNumber, int LOWEST_NUMBER, int HIGHEST_NUMBER) {
+    private boolean ifTypedNumberIsOutOfRange(int typedNumber, int LOWEST_NUMBER, int HIGHEST_NUMBER) {
         if (typedNumber < LOWEST_NUMBER || typedNumber > HIGHEST_NUMBER) {
             System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
             return true;
@@ -56,7 +57,7 @@ public class SelectUserNumbers {
         return false;
     }
 
-    void sortNumbers(List<Integer> unsortedList) {
+    private void sortNumbers(List<Integer> unsortedList) {
         Collections.sort(unsortedList);
     }
 }

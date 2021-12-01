@@ -1,11 +1,8 @@
 package minigames;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static minigames.GameConfiguration.AMOUNT_OF_NUMBERS;
-import static minigames.GameConfiguration.RANDOM_NUMBER_BOUND;
+import static minigames.GameConfiguration.*;
 
 public class DrawNumbers {
 
@@ -45,7 +42,7 @@ public class DrawNumbers {
         return false;
     }
 
-    private void sortNumbers (List < Integer > unsortedList) {
+    private void sortNumbers(List<Integer> unsortedList) {
         Collections.sort(unsortedList);
     }
 }

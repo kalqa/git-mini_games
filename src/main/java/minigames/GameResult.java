@@ -7,19 +7,28 @@ import static minigames.Messages.*;
 
 public class GameResult {
 
-    void checkResultAndPrintMessage(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
-        ifDrawnNumbersEqualsSelectedUserNumbers(selectedUserNumbers, drawnNumbers);
-        printDrawnNumbers(drawnNumbers);
-        printSelectedUserNumbers(selectedUserNumbers);
+    class Result{
+        private boolean result;
+        private String message;
+
+        public Result(boolean result, String message) {
+            this.result = result;
+            this.message = message;
+        }
     }
 
-    boolean ifDrawnNumbersEqualsSelectedUserNumbers(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
+    Result checkResultAndPrintMessage(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
+        isDrawnNumbersEqualsSelectedUserNumbers(selectedUserNumbers, drawnNumbers);
+        printDrawnNumbers(drawnNumbers);
+        printSelectedUserNumbers(selectedUserNumbers);
+        return new Result(true, "wygrales");
+    }
+
+    private boolean isDrawnNumbersEqualsSelectedUserNumbers(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
-            if (selectedUserNumbers.get(i) != drawnNumbers.get(i)) {
+            if (!selectedUserNumbers.get(i).equals(drawnNumbers.get(i))) {
                 System.out.println(LOST_INFORMATION);
                 return false;
-            } else {
-                continue;
             }
         }
         System.out.println(WIN_INFORMATION);
@@ -47,4 +56,6 @@ public class GameResult {
         }
         System.out.println(PRINTED_SELECTED_USER_NUMBERS);
     }
+
+
 }
