@@ -1,44 +1,47 @@
-package minigames;
+package manager;
+
+import api.InputReceiver;
+import service.InputReceiverScanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static minigames.GameConfiguration.*;
-import static minigames.Messages.*;
+import static configuration.GameConfiguration.*;
+import static configuration.MessagesConfiguration.*;
 
-public class SelectUserNumbers {
+public class UserNumbersSelector {
 
     InputReceiver inputReceiver = new InputReceiverScanner();
-    List<Integer> selectedUserNumbers = new ArrayList<>();
 
-    public SelectUserNumbers() {
+    public UserNumbersSelector() {
     }
 
-    List<Integer> selectingNumbersByUser() {
-        selectingNumbersByUserAndCheckingInputError();
+    public List<Integer> selectingNumbersByUser() {
+        List<Integer> selectedUserNumbers = selectingNumbersByUserAndCheckingInputError();
         sortNumbers(selectedUserNumbers);
         return selectedUserNumbers;
     }
 
     List<Integer> selectingNumbersByUserAndCheckingInputError() {
+        List<Integer> selectedUserNumbers = new ArrayList<>();
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             System.out.println(WRITE_NUMBER + (i + 1) + ":");
             int typedNumber = inputReceiver.nextInt();
-            boolean ifAddSelectedNumber = true;
+            boolean addSelectedNumber = true;
 
-            if (ifTypedNumberSelectedBefore(typedNumber) || ifTypedNumberIsOutOfRange(typedNumber, LOWEST_NUMBER, HIGHEST_NUMBER)) {
-                ifAddSelectedNumber = false;
+            if (isTypedNumberSelectedBefore(typedNumber, selectedUserNumbers) || isTypedNumberIsOutOfRange(typedNumber)) {
+                addSelectedNumber = false;
                 i--;
             }
-            if (ifAddSelectedNumber) {
-                selectedUserNumbers.add(i, typedNumber);
+            if (addSelectedNumber) {
+                selectedUserNumbers.add(typedNumber);
             }
         }
         return selectedUserNumbers;
     }
 
-    boolean ifTypedNumberSelectedBefore(int typedNumber) {
+    private boolean isTypedNumberSelectedBefore(int typedNumber, List<Integer> selectedUserNumbers) {
         for (int number : selectedUserNumbers) {
             if (number == typedNumber) {
                 System.out.println(NUMBER_SELECTED_BEFORE);
@@ -48,7 +51,7 @@ public class SelectUserNumbers {
         return false;
     }
 
-    boolean ifTypedNumberIsOutOfRange(int typedNumber, int LOWEST_NUMBER, int HIGHEST_NUMBER) {
+    private boolean isTypedNumberIsOutOfRange(int typedNumber) {
         if (typedNumber < LOWEST_NUMBER || typedNumber > HIGHEST_NUMBER) {
             System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
             return true;
@@ -56,7 +59,7 @@ public class SelectUserNumbers {
         return false;
     }
 
-    void sortNumbers(List<Integer> unsortedList) {
+    private void sortNumbers(List<Integer> unsortedList) {
         Collections.sort(unsortedList);
     }
 }

@@ -1,4 +1,4 @@
-package minigames;
+package api;
 
 public interface InputReceiver {
     int nextInt();

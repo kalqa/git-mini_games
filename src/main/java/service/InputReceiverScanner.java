@@ -1,4 +1,6 @@
-package minigames;
+package service;
+
+import api.InputReceiver;
 
 import java.util.Scanner;
 
