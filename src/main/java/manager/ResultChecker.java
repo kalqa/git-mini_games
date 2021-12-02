@@ -8,22 +8,15 @@ import static configuration.MessagesConfiguration.WIN_INFORMATION;
 
 public class ResultChecker {
 
-    public static class GameResult {
-
-        List<Integer> selectedUserNumbers;
-        List<Integer> drawnNumbers;
-        boolean isWin;
-
-        public GameResult(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers, boolean isWin) {
-            this.selectedUserNumbers = selectedUserNumbers;
-            this.drawnNumbers = drawnNumbers;
-            this.isWin = isWin;
-        }
-    }
-
-    public GameResult checkResult(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
+    public String checkResult(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {
+        String message;
         boolean isWin = isDrawnNumbersEqualsSelectedUserNumbers(selectedUserNumbers, drawnNumbers);
-        return new GameResult(selectedUserNumbers, drawnNumbers, isWin);
+        if (!isWin) {
+            message = LOST_INFORMATION;
+        } else {
+            message = WIN_INFORMATION;
+        }
+        return message;
     }
 
     private boolean isDrawnNumbersEqualsSelectedUserNumbers(List<Integer> selectedUserNumbers, List<Integer> drawnNumbers) {

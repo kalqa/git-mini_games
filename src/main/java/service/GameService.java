@@ -20,7 +20,7 @@ public class GameService {
         introduction.welcomeAndWaitForUserToStart();
         List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
         List<Integer> drawnNumbers = drawNumbers.drawingNumbers();
-        ResultChecker.GameResult gameResult = resultChecker.checkResult(selectedUserNumbers, drawnNumbers);
-        resultPrinter.printResult(gameResult);
+        String gameResult = resultChecker.checkResult(selectedUserNumbers, drawnNumbers);
+        resultPrinter.printResult(gameResult, selectedUserNumbers, drawnNumbers);
     }
 }

@@ -10,28 +10,17 @@ import static configuration.MessagesConfiguration.WIN_INFORMATION;
 
 public class ResultPrinter {
 
-    ResultChecker.GameResult gameResult;
-
     public ResultPrinter() {
     }
 
-    public ResultPrinter(ResultChecker.GameResult gameResult) {
-        this.gameResult = gameResult;
+    public void printResult(String gameResult, List<Integer> drawnNumbers, List<Integer> selectedUserNumbers) {
+        printWinOrLoseMessage(gameResult);
+        printDrawnNumbers(drawnNumbers);
+        printSelectedUserNumbers(selectedUserNumbers);
     }
 
-    public void printResult(ResultChecker.GameResult gameResult) {
-        printWinOrLoseMessage(gameResult.isWin);
-        printDrawnNumbers(gameResult.drawnNumbers);
-        printSelectedUserNumbers(gameResult.selectedUserNumbers);
-    }
-
-    private void printWinOrLoseMessage(boolean isWin) {
-        if (!isWin) {
-            System.out.println(LOST_INFORMATION);
-        }
-        else {
-            System.out.println(WIN_INFORMATION);
-        }
+    private void printWinOrLoseMessage(String message) {
+            System.out.println(message);
     }
 
     private void printDrawnNumbers(List<Integer> drawnNumbers) {
