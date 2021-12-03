@@ -15,4 +15,5 @@ public class MessagesConfiguration {
     public static final String NUMBER_SELECTED_BEFORE = "Wytypowałeś już tę liczbę wcześniej. \nSpróbuj jeszcze raz";
     public static final String NUMBER_SELECTED_OUT_OF_RANGE = "Wytypowałeś liczbę spoza zakresu ";
     public static final String TRY_AGAIN = "\nSpróbuj jeszcze raz";
+    public static final String INPUT_ERROR = "Użyłeś niedozwolonego znaku lub użyłeś zbyt dużej/małej liczby. Spróbuj jeszcze raz.";
 }

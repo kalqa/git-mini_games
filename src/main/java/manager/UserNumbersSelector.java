@@ -5,12 +5,23 @@ import service.InputReceiverScanner;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.List;
 
 import static configuration.GameConfiguration.*;
 import static configuration.MessagesConfiguration.*;
 
 public class UserNumbersSelector {
+
+    static class InputResult {
+        private final boolean inputError;
+        private final int typedNumber;
+
+        public InputResult(boolean inputError, int typedNumber) {
+            this.inputError = inputError;
+            this.typedNumber = typedNumber;
+        }
+    }
 
     InputReceiver inputReceiver = new InputReceiverScanner();
 
@@ -27,19 +38,37 @@ public class UserNumbersSelector {
         List<Integer> selectedUserNumbers = new ArrayList<>();
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             System.out.println(WRITE_NUMBER + (i + 1) + ":");
-            int typedNumber = inputReceiver.nextInt();
-            boolean addSelectedNumber = true;
 
-            if (isTypedNumberSelectedBefore(typedNumber, selectedUserNumbers) || isTypedNumberIsOutOfRange(typedNumber)) {
-                addSelectedNumber = false;
+            InputResult inputResult = takeUserInput();
+            if (inputResult.inputError) {
                 i--;
             }
-            if (addSelectedNumber) {
-                selectedUserNumbers.add(typedNumber);
+            else {
+                if (isTypedNumberSelectedBefore(inputResult.typedNumber, selectedUserNumbers) || isTypedNumberIsOutOfRange(inputResult.typedNumber)) {
+                    i--;
+                }
+                else {
+                    selectedUserNumbers.add(inputResult.typedNumber);
+                }
             }
         }
         return selectedUserNumbers;
     }
+
+    private InputResult takeUserInput() {
+        boolean inputError = false;
+        int typedNumber = 0;
+        try {
+            typedNumber = inputReceiver.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println(INPUT_ERROR);
+            inputError = true;
+        } finally {
+            inputReceiver.enterButton();
+        }
+        return new InputResult(inputError, typedNumber);
+    }
+
 
     private boolean isTypedNumberSelectedBefore(int typedNumber, List<Integer> selectedUserNumbers) {
         for (int number : selectedUserNumbers) {
