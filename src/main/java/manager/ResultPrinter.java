@@ -1,20 +1,16 @@
 package manager;
 
-import java.util.List;
 import java.util.Set;
 
-import static configuration.GameConfiguration.AMOUNT_OF_NUMBERS;
-import static configuration.MessagesConfiguration.LOST_INFORMATION;
 import static configuration.MessagesConfiguration.PRINTED_DRAWN_NUMBERS;
 import static configuration.MessagesConfiguration.PRINTED_SELECTED_USER_NUMBERS;
-import static configuration.MessagesConfiguration.WIN_INFORMATION;
 
 public class ResultPrinter {
 
     public ResultPrinter() {
     }
 
-    public void printResult(String gameResult, List<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {
+    public void printResult(String gameResult, Set<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {
         printWinOrLoseMessage(gameResult);
         printDrawnNumbers(drawnNumbers);
         printSelectedUserNumbers(selectedUserNumbers);
@@ -25,24 +21,10 @@ public class ResultPrinter {
     }
 
     private void printDrawnNumbers(Set<Integer> drawnNumbers) {
-       /* for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
-            if (drawnNumbers.get(i) < 10) {
-                System.out.print("0" + drawnNumbers.get(i) + " ");
-            } else {
-                System.out.print(drawnNumbers.get(i) + " ");
-            }
-        }
-        System.out.println(PRINTED_DRAWN_NUMBERS);*/
+        System.out.println(drawnNumbers + " " + PRINTED_DRAWN_NUMBERS);
     }
 
-    private void printSelectedUserNumbers(List<Integer> selectedUserNumbers) {
-        for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
-            if (selectedUserNumbers.get(i) < 10) {
-                System.out.print("0" + selectedUserNumbers.get(i) + " ");
-            } else {
-                System.out.print(selectedUserNumbers.get(i) + " ");
-            }
-        }
-        System.out.println(PRINTED_SELECTED_USER_NUMBERS);
+    private void printSelectedUserNumbers(Set<Integer> selectedUserNumbers) {
+        System.out.println(selectedUserNumbers + " " + PRINTED_SELECTED_USER_NUMBERS);
     }
 }

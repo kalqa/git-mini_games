@@ -3,10 +3,9 @@ package manager;
 import api.InputReceiver;
 import service.InputReceiverScanner;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.InputMismatchException;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static configuration.GameConfiguration.*;
 import static configuration.MessagesConfiguration.*;
@@ -28,27 +27,24 @@ public class UserNumbersSelector {
     public UserNumbersSelector() {
     }
 
-    public List<Integer> selectingNumbersByUser() {
-        List<Integer> selectedUserNumbers = selectingNumbersByUserAndCheckingInputError();
-        Collections.sort(selectedUserNumbers);
-        return selectedUserNumbers;
-    }
+    public Set<Integer> selectingNumbersByUser() {
+        Set<Integer> selectedUserNumbers = new TreeSet<>();
 
-    List<Integer> selectingNumbersByUserAndCheckingInputError() {
-        List<Integer> selectedUserNumbers = new ArrayList<>();
-        for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
-            System.out.println(WRITE_NUMBER + (i + 1) + ":");
-
+        while (selectedUserNumbers.size() < AMOUNT_OF_NUMBERS) {
+            int actualInputNumber = 1;
+            System.out.println(WRITE_NUMBER + actualInputNumber + ":");
             InputResult inputResult = takeUserInput();
+
             if (inputResult.inputError) {
-                i--;
-            }
-            else {
-                if (isTypedNumberSelectedBefore(inputResult.typedNumber, selectedUserNumbers) || isTypedNumberIsOutOfRange(inputResult.typedNumber)) {
-                    i--;
-                }
-                else {
+                System.out.println(INPUT_ERROR);
+            } else {
+                if (isTypedNumberIsOutOfRange(inputResult.typedNumber)) {
+                    System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
+                } else if (isTypedNumberSelectedBefore(inputResult.typedNumber, selectedUserNumbers)) {
+                    System.out.println(NUMBER_SELECTED_BEFORE);
+                } else {
                     selectedUserNumbers.add(inputResult.typedNumber);
+                    actualInputNumber++;
                 }
             }
         }
@@ -61,7 +57,6 @@ public class UserNumbersSelector {
         try {
             typedNumber = inputReceiver.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println(INPUT_ERROR);
             inputError = true;
         } finally {
             inputReceiver.enterButton();
@@ -70,10 +65,9 @@ public class UserNumbersSelector {
     }
 
 
-    private boolean isTypedNumberSelectedBefore(int typedNumber, List<Integer> selectedUserNumbers) {
+    private boolean isTypedNumberSelectedBefore(int typedNumber, Set<Integer> selectedUserNumbers) {
         for (int number : selectedUserNumbers) {
             if (number == typedNumber) {
-                System.out.println(NUMBER_SELECTED_BEFORE);
                 return true;
             }
         }
@@ -81,10 +75,6 @@ public class UserNumbersSelector {
     }
 
     private boolean isTypedNumberIsOutOfRange(int typedNumber) {
-        if (typedNumber < LOWEST_NUMBER || typedNumber > HIGHEST_NUMBER) {
-            System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
-            return true;
-        }
-        return false;
+        return typedNumber < LOWEST_NUMBER || typedNumber > HIGHEST_NUMBER;
     }
 }

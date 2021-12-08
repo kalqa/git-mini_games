@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
 import java.util.Set;
 
 import static configuration.GameConfiguration.HIGHEST_NUMBER;
@@ -20,7 +19,7 @@ class DrawNumbersManagerTests {
         //  given
         DrawNumbersManager drawNumbers = new DrawNumbersManager();
         //  when
-        Set<Integer> resultList = drawNumbers.drawingNumbers();
+        Set<Integer> resultList = drawNumbers.drawNumbers();
 
         //  then
         assertNotNull(resultList);
@@ -31,7 +30,7 @@ class DrawNumbersManagerTests {
         //  given
         DrawNumbersManager drawNumbers = new DrawNumbersManager();
         //  when
-        Set<Integer> resultList = drawNumbers.drawingNumbers();
+        Set<Integer> resultList = drawNumbers.drawNumbers();
         int resultSize = resultList.size();
 
         //  then

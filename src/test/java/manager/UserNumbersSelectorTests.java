@@ -1,21 +1,20 @@
 package manager;
 
 import api.InputReceiver;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import service.InputReceiverScanner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static configuration.GameConfiguration.HIGHEST_NUMBER;
 import static configuration.GameConfiguration.LOWEST_NUMBER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -30,21 +29,22 @@ class UserNumbersSelectorTests {
         //  given
         UserNumbersSelector userNumbersSelector = mock(UserNumbersSelector.class);
         //  when
-        List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
+        Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
         //  then
         assertNotNull(selectedUserNumbers);
     }
 
+    @Disabled
     @Tag("czy ma sens? Metoda selectingNumbersByUser() musi zwrócić listę z 6 liczbami, " +
             "ale ta metoda tylko otrzymuje tę listę od metody wewnętrznej selectingNumbersByUserAndCheckingInputError()")
     @Test
     void selectingNumbersByUser__Return_size_of_selected_numbers_by_user_list__When_6_numbers_was_select() {
         //  given
         UserNumbersSelector userNumbersSelector = mock(UserNumbersSelector.class);
-        given(userNumbersSelector.selectingNumbersByUser()).willReturn(Arrays.asList(1, 2, 3, 4, 5, 6));
+        //given(userNumbersSelector.selectingNumbersByUser()).willReturn(1, 2, 3, 4, 5, 6);
         //  when
-        List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
+        Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
         int sizeOfList = selectedUserNumbers.size();
 
         //  then
@@ -52,60 +52,60 @@ class UserNumbersSelectorTests {
     }
 
     @Test
-    void selectingNumbersByUserAndCheckingInputError__Returns_correct_selected_numbers_list__When_typed_numbers_are_in_range_and_not_repeated() {
+    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_numbers_are_in_range_and_not_repeated() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
         given(userNumbersSelector.inputReceiver.nextInt()).willReturn(1,2, 3, 4, 5, 6);
 
-        List<Integer> expectedSelectedUserNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         //  when
-        List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUserAndCheckingInputError();
+        Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
         //  then
         assertEquals(expectedSelectedUserNumbers, selectedUserNumbers);
     }
 
     @Test
-    void selectingNumbersByUserAndCheckingInputError__Returns_correct_selected_numbers_list__When_typed_number_is_repeated() {
+    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_number_is_repeated() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
         given(userNumbersSelector.inputReceiver.nextInt()).willReturn(90,91, 91, 92, 93, 94, 95);
 
-        List<Integer> expectedSelectedUserNumbers = Arrays.asList(90, 91, 92, 93, 94, 95);
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(90, 91, 92, 93, 94, 95));
         //  when
-        List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUserAndCheckingInputError();
+        Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
         //  then
         assertEquals(expectedSelectedUserNumbers, selectedUserNumbers);
     }
 
     @Test
-    void selectingNumbersByUserAndCheckingInputError__Returns_correct_selected_numbers_list__When_typed_number_is_out_range() {
+    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_number_is_out_range() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
         given(userNumbersSelector.inputReceiver.nextInt()).willReturn(5, 15, 150, 25, 35, 45, 55);
 
-        List<Integer> expectedSelectedUserNumbers = Arrays.asList(5, 15, 25, 35, 45, 55);
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(5, 15, 25, 35, 45, 55));
         //  when
-        List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUserAndCheckingInputError();
+        Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
         //  then
         assertEquals(expectedSelectedUserNumbers, selectedUserNumbers);
     }
 
     @Test
-    void selectingNumbersByUserAndCheckingInputError__Returns_correct_selected_numbers_list__When_typed_series_of_numbers_are_repeated_and_out_of_range() {
+    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_series_of_numbers_are_repeated_and_out_of_range() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
         given(userNumbersSelector.inputReceiver.nextInt()).willReturn(11, 11, -5, (LOWEST_NUMBER-1), 22, 33, 33, 205, 44, 44, 55, (HIGHEST_NUMBER+1), 66);
 
-        List<Integer> expectedSelectedUserNumbers = Arrays.asList(11, 22, 33, 44, 55, 66);
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(11, 22, 33, 44, 55, 66));
         //  when
-        List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUserAndCheckingInputError();
+        Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
         //  then
         assertEquals(expectedSelectedUserNumbers, selectedUserNumbers);
