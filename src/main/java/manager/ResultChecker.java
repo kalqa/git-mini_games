@@ -2,9 +2,6 @@ package manager;
 
 import java.util.Set;
 
-import static configuration.MessagesConfiguration.LOST_INFORMATION;
-import static configuration.MessagesConfiguration.WIN_INFORMATION;
-
 public class ResultChecker {
 
     public ResultChecker() {
@@ -13,6 +10,17 @@ public class ResultChecker {
     public static class ResultMessage {
         private final String resultMessage;
 
+        private enum Information {
+            WIN_INFORMATION("asdasd"),
+            LOST_INFORMATION("asdasdzxc");
+
+            public final String message;
+
+            Information(String message) {
+                this.message = message;
+            }
+        }
+
         public ResultMessage(String resultMessage) {
             this.resultMessage = resultMessage;
         }
@@ -20,14 +28,22 @@ public class ResultChecker {
         public String getResultMessage() {
             return resultMessage;
         }
+
+        public static ResultMessage winResultMessage() {
+            return new ResultMessage(Information.WIN_INFORMATION.message);
+        }
+
+        public static ResultMessage lostResultMessage() {
+            return new ResultMessage(Information.LOST_INFORMATION.message);
+        }
     }
 
     public ResultMessage checkResult(Set<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {
         boolean isWin = isDrawnNumbersEqualsSelectedUserNumbers(selectedUserNumbers, drawnNumbers);
         if (!isWin) {
-            return new ResultMessage(LOST_INFORMATION);
+            return ResultMessage.lostResultMessage();
         } else {
-            return new ResultMessage(WIN_INFORMATION);
+            return ResultMessage.winResultMessage();
         }
     }
 
