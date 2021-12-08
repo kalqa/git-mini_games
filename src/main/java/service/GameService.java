@@ -20,7 +20,7 @@ public class GameService {
         introduction.welcomeAndWaitForUserToStart();
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
         Set<Integer> drawnNumbers = drawNumbers.drawNumbers();
-        String gameResult = resultChecker.checkResult(selectedUserNumbers, drawnNumbers);
-        resultPrinter.printResult(gameResult, selectedUserNumbers, drawnNumbers);
+        ResultChecker.ResultMessage resultMessage = resultChecker.checkResult(selectedUserNumbers, drawnNumbers);
+        resultPrinter.printResult(resultMessage, selectedUserNumbers, drawnNumbers);
     }
 }

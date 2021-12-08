@@ -7,15 +7,28 @@ import static configuration.MessagesConfiguration.WIN_INFORMATION;
 
 public class ResultChecker {
 
-    public String checkResult(Set<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {
-        String message;
+    public ResultChecker() {
+    }
+
+    public static class ResultMessage {
+        private final String resultMessage;
+
+        public ResultMessage(String resultMessage) {
+            this.resultMessage = resultMessage;
+        }
+
+        public String getResultMessage() {
+            return resultMessage;
+        }
+    }
+
+    public ResultMessage checkResult(Set<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {
         boolean isWin = isDrawnNumbersEqualsSelectedUserNumbers(selectedUserNumbers, drawnNumbers);
         if (!isWin) {
-            message = LOST_INFORMATION;
+            return new ResultMessage(LOST_INFORMATION);
         } else {
-            message = WIN_INFORMATION;
+            return new ResultMessage(WIN_INFORMATION);
         }
-        return message;
     }
 
     private boolean isDrawnNumbersEqualsSelectedUserNumbers(Set<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {

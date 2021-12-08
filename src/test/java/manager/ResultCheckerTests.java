@@ -1,10 +1,8 @@
 package manager;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -21,10 +19,10 @@ class ResultCheckerTests {
         Set<Integer> selectedNumbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         Set<Integer> drawnNumbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         //  when
-        String message = resultChecker.checkResult(selectedNumbers, drawnNumbers);
+        ResultChecker.ResultMessage resultMessage = resultChecker.checkResult(selectedNumbers, drawnNumbers);
 
         //  then
-        assertEquals(WIN_INFORMATION, message);
+        assertEquals(WIN_INFORMATION, resultMessage.getResultMessage());
     }
 
     @Test
@@ -34,9 +32,9 @@ class ResultCheckerTests {
         Set<Integer> selectedNumbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         Set<Integer> drawnNumbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5, 7));
         //  when
-        String message = resultChecker.checkResult(selectedNumbers, drawnNumbers);
+        ResultChecker.ResultMessage resultMessage = resultChecker.checkResult(selectedNumbers, drawnNumbers);
 
         //  then
-        assertEquals(LOST_INFORMATION, message);
+        assertEquals(LOST_INFORMATION, resultMessage.getResultMessage());
     }
 }

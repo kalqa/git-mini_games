@@ -1,6 +1,7 @@
 package manager;
 
 import api.InputReceiver;
+import service.MessagesPrinter;
 import service.InputReceiverScanner;
 
 import java.util.InputMismatchException;
@@ -12,6 +13,12 @@ import static configuration.MessagesConfiguration.*;
 
 public class UserNumbersSelector {
 
+    InputReceiver inputReceiver = new InputReceiverScanner();
+    private final MessagesPrinter messagesPrinter = new MessagesPrinter();
+
+    public UserNumbersSelector() {
+    }
+
     static class InputResult {
         private final boolean inputError;
         private final int typedNumber;
@@ -22,26 +29,21 @@ public class UserNumbersSelector {
         }
     }
 
-    InputReceiver inputReceiver = new InputReceiverScanner();
-
-    public UserNumbersSelector() {
-    }
-
     public Set<Integer> selectingNumbersByUser() {
         Set<Integer> selectedUserNumbers = new TreeSet<>();
+        int actualInputNumber = 1;
 
         while (selectedUserNumbers.size() < AMOUNT_OF_NUMBERS) {
-            int actualInputNumber = 1;
-            System.out.println(WRITE_NUMBER + actualInputNumber + ":");
+            messagesPrinter.sendMessageToUser(WRITE_NUMBER + actualInputNumber + ":");
             InputResult inputResult = takeUserInput();
 
             if (inputResult.inputError) {
-                System.out.println(INPUT_ERROR);
+                messagesPrinter.sendMessageToUser(INPUT_ERROR);
             } else {
                 if (isTypedNumberIsOutOfRange(inputResult.typedNumber)) {
-                    System.out.println(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
+                    messagesPrinter.sendMessageToUser(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
                 } else if (isTypedNumberSelectedBefore(inputResult.typedNumber, selectedUserNumbers)) {
-                    System.out.println(NUMBER_SELECTED_BEFORE);
+                    messagesPrinter.sendMessageToUser(NUMBER_SELECTED_BEFORE);
                 } else {
                     selectedUserNumbers.add(inputResult.typedNumber);
                     actualInputNumber++;

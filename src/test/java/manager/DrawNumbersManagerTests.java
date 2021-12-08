@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Set;
 
 import static configuration.GameConfiguration.HIGHEST_NUMBER;
@@ -37,19 +39,33 @@ class DrawNumbersManagerTests {
         assertEquals(resultSize, 6);
     }
 
-   /* @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
-    void drawingNumbers__Numbers_returned_in_list_are_in_range__When_draws_numbers(int index) {
+  @Test
+    void drawingNumbers__Lowest_number_in_set_is_in_range__When_draws_numbers() {
         //  given
         DrawNumbersManager drawNumbers = new DrawNumbersManager();
         //  when
-        Set<Integer> resultList = drawNumbers.drawNumbers();
-        int drawnNumber = resultList.get(index);
-        boolean isInRange = preparedMethodForTest__isNumberInRange(drawnNumber);
+        Set<Integer> drawnNumbers = drawNumbers.drawNumbers();
+
+        Integer lowestNumber = Collections.min(drawnNumbers);
+        boolean isInRange = preparedMethodForTest__isNumberInRange(lowestNumber);
 
         //  then
         assertTrue(isInRange);
-    }*/
+    }
+
+    @Test
+    void drawingNumbers__Highest_number_in_set_is_in_range__When_draws_numbers() {
+        //  given
+        DrawNumbersManager drawNumbers = new DrawNumbersManager();
+        //  when
+        Set<Integer> drawnNumbers = drawNumbers.drawNumbers();
+
+        Integer highestNumber = Collections.max(drawnNumbers);
+        boolean isInRange = preparedMethodForTest__isNumberInRange(highestNumber);
+
+        //  then
+        assertTrue(isInRange);
+    }
 
     private boolean preparedMethodForTest__isNumberInRange(int drawnNumber) {
         if (drawnNumber >= LOWEST_NUMBER && drawnNumber <= HIGHEST_NUMBER) {

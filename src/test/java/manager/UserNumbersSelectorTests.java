@@ -1,7 +1,6 @@
 package manager;
 
 import api.InputReceiver;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +9,7 @@ import java.util.InputMismatchException;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static configuration.GameConfiguration.AMOUNT_OF_NUMBERS;
 import static configuration.GameConfiguration.HIGHEST_NUMBER;
 import static configuration.GameConfiguration.LOWEST_NUMBER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +25,7 @@ class UserNumbersSelectorTests {
 
     @Tag("czy ma sens? Metoda selectingNumbersByUser() musi zwrócić listę, ale czy ja tutaj nie sprawdzam poprawnego działania biblioteki Mockito?")
     @Test
-    void selectingNumbersByUser__Returns_not_null_list__When_UserNumbersSelector_is_mocked() {
+    void selectingNumbersByUser__Returns_not_null_set__When_UserNumbersSelector_is_mocked() {
         //  given
         UserNumbersSelector userNumbersSelector = mock(UserNumbersSelector.class);
         //  when
@@ -35,24 +35,22 @@ class UserNumbersSelectorTests {
         assertNotNull(selectedUserNumbers);
     }
 
-    @Disabled
-    @Tag("czy ma sens? Metoda selectingNumbersByUser() musi zwrócić listę z 6 liczbami, " +
-            "ale ta metoda tylko otrzymuje tę listę od metody wewnętrznej selectingNumbersByUserAndCheckingInputError()")
     @Test
-    void selectingNumbersByUser__Return_size_of_selected_numbers_by_user_list__When_6_numbers_was_select() {
+    void selectingNumbersByUser__Return_correct_size_of_selected_user_numbers_collection__When_6_numbers_was_select() {
         //  given
-        UserNumbersSelector userNumbersSelector = mock(UserNumbersSelector.class);
-        //given(userNumbersSelector.selectingNumbersByUser()).willReturn(1, 2, 3, 4, 5, 6);
+        UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
+        userNumbersSelector.inputReceiver = mock(InputReceiver.class);
+        given(userNumbersSelector.inputReceiver.nextInt()).willReturn(1,2, 2, -5, 3, 4, 5, 6, 7);
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
-        int sizeOfList = selectedUserNumbers.size();
+        int sizeOfCollection = selectedUserNumbers.size();
 
         //  then
-        assertEquals(sizeOfList, 6);
+        assertEquals(sizeOfCollection, AMOUNT_OF_NUMBERS);
     }
 
     @Test
-    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_numbers_are_in_range_and_not_repeated() {
+    void selectingNumbersByUser__Returns_correct_selected_user_numbers_collection__When_typed_numbers_are_in_range_and_not_repeated() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
@@ -67,7 +65,7 @@ class UserNumbersSelectorTests {
     }
 
     @Test
-    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_number_is_repeated() {
+    void selectingNumbersByUser__Returns_correct_selected_user_numbers_collection__When_typed_number_is_repeated() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
@@ -82,7 +80,7 @@ class UserNumbersSelectorTests {
     }
 
     @Test
-    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_number_is_out_range() {
+    void selectingNumbersByUser__Returns_correct_selected_user_numbers_collection__When_typed_number_is_out_range() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
@@ -97,7 +95,7 @@ class UserNumbersSelectorTests {
     }
 
     @Test
-    void selectingNumbersByUser__Returns_correct_selected_numbers_list__When_typed_series_of_numbers_are_repeated_and_out_of_range() {
+    void selectingNumbersByUser__Returns_correct_selected_user_numbers_collection__When_typed_series_of_numbers_are_repeated_and_out_of_range() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
