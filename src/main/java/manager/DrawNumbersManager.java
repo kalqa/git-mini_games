@@ -3,6 +3,8 @@ package manager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static configuration.GameConfiguration.AMOUNT_OF_NUMBERS;
 import static configuration.GameConfiguration.LOWEST_NUMBER;
@@ -13,14 +15,24 @@ public class DrawNumbersManager {
     public DrawNumbersManager() {
     }
 
-    public List<Integer> drawingNumbers() {
-        List<Integer> drawnNumbers = drawNumbers();
-        sortNumbers(drawnNumbers);
+    public Set<Integer> drawingNumbers() {
+        Set<Integer> drawnNumbers = drawNumbers();
+        //Collections.sort(drawnNumbers);
         return drawnNumbers;
     }
 
-    List<Integer> drawNumbers() {
-        List<Integer> drawnNumbers = new ArrayList<>();
+    Set<Integer> drawNumbers() {
+        Set<Integer> drawnNumbers = new TreeSet<>();
+
+        while (drawnNumbers.size() < AMOUNT_OF_NUMBERS) {
+            int randomNumber = (int) (Math.random() * RANDOM_NUMBER_BOUND) + LOWEST_NUMBER;
+            drawnNumbers.add(randomNumber);
+            //System.out.print(randomNumber + " ");
+        }
+       //System.out.println("\n" + drawnNumbers);
+        return drawnNumbers;
+
+        /* Set<Integer> drawnNumbers = new TreeSet<>();
         for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             int randomNumber = (int) (Math.random() * RANDOM_NUMBER_BOUND) + LOWEST_NUMBER;
             boolean addDrawnNumber = true;
@@ -33,20 +45,16 @@ public class DrawNumbersManager {
                 drawnNumbers.add(randomNumber);
             }
         }
-        return drawnNumbers;
+        return drawnNumbers;*/
     }
 
-    private boolean isActualRandomNumberWasDrawnBefore(int randomNumber, List<Integer> drawnNumbers) {
+    private boolean isActualRandomNumberWasDrawnBefore(int randomNumber, Set<Integer> drawnNumbers) {
         for (Integer number : drawnNumbers) {
             if (number.equals(randomNumber)) {
                 return true;
             }
         }
         return false;
-    }
-
-    private void sortNumbers (List < Integer > unsortedList) {
-        Collections.sort(unsortedList);
     }
 }
 

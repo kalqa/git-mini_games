@@ -7,6 +7,7 @@ import manager.ResultPrinter;
 import manager.UserNumbersSelector;
 
 import java.util.List;
+import java.util.Set;
 
 public class GameService {
 
@@ -19,7 +20,7 @@ public class GameService {
     public void operateGame() {
         introduction.welcomeAndWaitForUserToStart();
         List<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
-        List<Integer> drawnNumbers = drawNumbers.drawingNumbers();
+        Set<Integer> drawnNumbers = drawNumbers.drawingNumbers();
         String gameResult = resultChecker.checkResult(selectedUserNumbers, drawnNumbers);
         resultPrinter.printResult(gameResult, selectedUserNumbers, drawnNumbers);
     }

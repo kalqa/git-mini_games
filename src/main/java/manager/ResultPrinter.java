@@ -1,6 +1,7 @@
 package manager;
 
 import java.util.List;
+import java.util.Set;
 
 import static configuration.GameConfiguration.AMOUNT_OF_NUMBERS;
 import static configuration.MessagesConfiguration.LOST_INFORMATION;
@@ -13,7 +14,7 @@ public class ResultPrinter {
     public ResultPrinter() {
     }
 
-    public void printResult(String gameResult, List<Integer> drawnNumbers, List<Integer> selectedUserNumbers) {
+    public void printResult(String gameResult, List<Integer> selectedUserNumbers, Set<Integer> drawnNumbers) {
         printWinOrLoseMessage(gameResult);
         printDrawnNumbers(drawnNumbers);
         printSelectedUserNumbers(selectedUserNumbers);
@@ -23,15 +24,15 @@ public class ResultPrinter {
             System.out.println(message);
     }
 
-    private void printDrawnNumbers(List<Integer> drawnNumbers) {
-        for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
+    private void printDrawnNumbers(Set<Integer> drawnNumbers) {
+       /* for (int i = 0; i < AMOUNT_OF_NUMBERS; i++) {
             if (drawnNumbers.get(i) < 10) {
                 System.out.print("0" + drawnNumbers.get(i) + " ");
             } else {
                 System.out.print(drawnNumbers.get(i) + " ");
             }
         }
-        System.out.println(PRINTED_DRAWN_NUMBERS);
+        System.out.println(PRINTED_DRAWN_NUMBERS);*/
     }
 
     private void printSelectedUserNumbers(List<Integer> selectedUserNumbers) {

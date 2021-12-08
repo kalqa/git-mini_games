@@ -30,7 +30,7 @@ public class UserNumbersSelector {
 
     public List<Integer> selectingNumbersByUser() {
         List<Integer> selectedUserNumbers = selectingNumbersByUserAndCheckingInputError();
-        sortNumbers(selectedUserNumbers);
+        Collections.sort(selectedUserNumbers);
         return selectedUserNumbers;
     }
 
@@ -86,9 +86,5 @@ public class UserNumbersSelector {
             return true;
         }
         return false;
-    }
-
-    private void sortNumbers(List<Integer> unsortedList) {
-        Collections.sort(unsortedList);
     }
 }
