@@ -1,18 +1,18 @@
-package manager;
+package welcomer;
 
 import api.InputReceiver;
-import service.MessagesPrinter;
-import service.InputReceiverScanner;
+import printer.MessagesPrinter;
+import scanner.InputReceiverScanner;
 
 import static configuration.MessagesConfiguration.GAME_ENTERED;
 import static configuration.MessagesConfiguration.INTRODUCTION;
 
-public class Introduction {
+public class UserWelcomer {
 
     private final InputReceiver inputReceiverScanner = new InputReceiverScanner();
     private final MessagesPrinter messagesPrinter = new MessagesPrinter();
 
-    public Introduction() {
+    public UserWelcomer() {
     }
 
     public void welcomeAndWaitForUserToStart() {

@@ -1,8 +1,8 @@
-package manager;
+package numbershandler.selector;
 
 import api.InputReceiver;
-import service.MessagesPrinter;
-import service.InputReceiverScanner;
+import printer.MessagesPrinter;
+import scanner.InputReceiverScanner;
 
 import java.util.InputMismatchException;
 import java.util.Set;

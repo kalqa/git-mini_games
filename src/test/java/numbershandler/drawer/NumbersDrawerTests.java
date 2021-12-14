@@ -1,11 +1,8 @@
-package manager;
+package numbershandler.drawer;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Set;
 
 import static configuration.GameConfiguration.HIGHEST_NUMBER;
@@ -14,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class DrawNumbersManagerTests {
+class NumbersDrawerTests {
 
     @Test
     void drawingNumbers__Returns_not_null_list__When_draws_numbers() {
         //  given
-        DrawNumbersManager drawNumbers = new DrawNumbersManager();
+        NumbersDrawer drawNumbers = new NumbersDrawer();
         //  when
         Set<Integer> resultList = drawNumbers.drawNumbers();
 
@@ -30,7 +27,7 @@ class DrawNumbersManagerTests {
     @Test
     void drawingNumbers__Size_of_returned_list_is_6__When_draws_numbers() {
         //  given
-        DrawNumbersManager drawNumbers = new DrawNumbersManager();
+        NumbersDrawer drawNumbers = new NumbersDrawer();
         //  when
         Set<Integer> resultList = drawNumbers.drawNumbers();
         int resultSize = resultList.size();
@@ -42,7 +39,7 @@ class DrawNumbersManagerTests {
   @Test
     void drawingNumbers__Lowest_number_in_set_is_in_range__When_draws_numbers() {
         //  given
-        DrawNumbersManager drawNumbers = new DrawNumbersManager();
+        NumbersDrawer drawNumbers = new NumbersDrawer();
         //  when
         Set<Integer> drawnNumbers = drawNumbers.drawNumbers();
 
@@ -56,7 +53,7 @@ class DrawNumbersManagerTests {
     @Test
     void drawingNumbers__Highest_number_in_set_is_in_range__When_draws_numbers() {
         //  given
-        DrawNumbersManager drawNumbers = new DrawNumbersManager();
+        NumbersDrawer drawNumbers = new NumbersDrawer();
         //  when
         Set<Integer> drawnNumbers = drawNumbers.drawNumbers();
 

@@ -1,6 +1,6 @@
-package manager;
+package resulter;
 
-import service.MessagesPrinter;
+import printer.MessagesPrinter;
 
 import java.util.Set;
 

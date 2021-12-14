@@ -1,4 +1,4 @@
-package service;
+package printer;
 
 import api.Printable;
 

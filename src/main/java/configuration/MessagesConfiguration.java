@@ -2,7 +2,7 @@ package configuration;
 
 public class MessagesConfiguration {
 
-    public static final String LOST_INFORMATION = "Pudło. Niestety, nie trafiłeś w wylosowane liczby";
+    public static final String LOSE_INFORMATION = "Pudło. Niestety, nie trafiłeś w wylosowane liczby";
     public static final String WIN_INFORMATION = "Wygrałeś. Trafiłeś/aś we wszystkie wylosowane liczby";
     public static final String INTRODUCTION = "Witaj w grze Lotek. " +
             "\n Wpisz kolejno " + GameConfiguration.AMOUNT_OF_NUMBERS + " wytypowanych przez Ciebie liczb pomiędzy " + GameConfiguration.LOWEST_NUMBER + "-" + GameConfiguration.HIGHEST_NUMBER + "." +

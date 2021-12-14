@@ -1,4 +1,4 @@
-package manager;
+package numbershandler.selector;
 
 import api.InputReceiver;
 import org.junit.jupiter.api.Tag;
@@ -18,16 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-@Tag("Czy wartości testowe liczb wybieranych przez gracza nie powinny być uzależnione od LOWEST_NUMBER i HIGHER NUMBER?." +
-        "Bo załóżmy, że zmienimy wartości LOWEST_NUMBER i HIGHER NUMBER np. na 50 i 100 i wtedy praktycznie całe testy w tej klasie lecą na głowę." +
-        "Moje proponowane rozwiązanie to testowanie liczb względnych np. LOWEST_NUMBER, LOWEST_NUMBER+1, LOWEST_NUMBER+2, itd.")
 class UserNumbersSelectorTests {
+
+    final int LN = LOWEST_NUMBER;
+    final int HN = HIGHEST_NUMBER;
 
     @Tag("czy ma sens? Metoda selectingNumbersByUser() musi zwrócić listę, ale czy ja tutaj nie sprawdzam poprawnego działania biblioteki Mockito?")
     @Test
     void selectingNumbersByUser__Returns_not_null_set__When_UserNumbersSelector_is_mocked() {
         //  given
         UserNumbersSelector userNumbersSelector = mock(UserNumbersSelector.class);
+
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
@@ -36,11 +37,12 @@ class UserNumbersSelectorTests {
     }
 
     @Test
-    void selectingNumbersByUser__Return_correct_size_of_selected_user_numbers_collection__When_6_numbers_was_select() {
+    void selectingNumbersByUser__Returns_proper_size_collection_of_user_numbers__When_amount_of_numbers_configuration_is_set() {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
-        given(userNumbersSelector.inputReceiver.nextInt()).willReturn(1,2, 2, -5, 3, 4, 5, 6, 7);
+        given(userNumbersSelector.inputReceiver.nextInt()).willReturn((LN - 2), (LN - 1), (LN + 1), (HN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6), (LN + 7));
+
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
         int sizeOfCollection = selectedUserNumbers.size();
@@ -54,9 +56,9 @@ class UserNumbersSelectorTests {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
-        given(userNumbersSelector.inputReceiver.nextInt()).willReturn(1,2, 3, 4, 5, 6);
+        given(userNumbersSelector.inputReceiver.nextInt()).willReturn((LN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6));
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList((LN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6)));
 
-        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
@@ -69,9 +71,9 @@ class UserNumbersSelectorTests {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
-        given(userNumbersSelector.inputReceiver.nextInt()).willReturn(90,91, 91, 92, 93, 94, 95);
+        given(userNumbersSelector.inputReceiver.nextInt()).willReturn((LN + 1), (LN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6));
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList((LN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6)));
 
-        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(90, 91, 92, 93, 94, 95));
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
@@ -84,9 +86,9 @@ class UserNumbersSelectorTests {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
-        given(userNumbersSelector.inputReceiver.nextInt()).willReturn(5, 15, 150, 25, 35, 45, 55);
+        given(userNumbersSelector.inputReceiver.nextInt()).willReturn((LN + 1), (HN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN - 1), (LN + 6));
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList((LN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6)));
 
-        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(5, 15, 25, 35, 45, 55));
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 
@@ -99,9 +101,9 @@ class UserNumbersSelectorTests {
         //  given
         UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
         userNumbersSelector.inputReceiver = mock(InputReceiver.class);
-        given(userNumbersSelector.inputReceiver.nextInt()).willReturn(11, 11, -5, (LOWEST_NUMBER-1), 22, 33, 33, 205, 44, 44, 55, (HIGHEST_NUMBER+1), 66);
+        given(userNumbersSelector.inputReceiver.nextInt()).willReturn((LN - 5), (LN - 1), (LN + 1), (LN + 2), (LN + 3), (HN + 1), (LN + 4), (LN + 5), (LN + 1), (LN + 6));
+        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList((LN + 1), (LN + 2), (LN + 3), (LN + 4), (LN + 5), (LN + 6)));
 
-        Set<Integer> expectedSelectedUserNumbers = new TreeSet<>(Arrays.asList(11, 22, 33, 44, 55, 66));
         //  when
         Set<Integer> selectedUserNumbers = userNumbersSelector.selectingNumbersByUser();
 

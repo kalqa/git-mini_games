@@ -1,4 +1,4 @@
-package manager;
+package numbershandler.drawer;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -7,9 +7,9 @@ import static configuration.GameConfiguration.AMOUNT_OF_NUMBERS;
 import static configuration.GameConfiguration.LOWEST_NUMBER;
 import static configuration.GameConfiguration.RANDOM_NUMBER_BOUND;
 
-public class DrawNumbersManager {
+public class NumbersDrawer {
 
-    public DrawNumbersManager() {
+    public NumbersDrawer() {
     }
 
     public Set<Integer> drawNumbers() {
