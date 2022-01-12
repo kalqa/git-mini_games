@@ -1,20 +1,22 @@
 package service;
 
-import numbershandler.drawer.NumbersDrawer;
-import resulter.ResultChecker;
-import welcomer.UserWelcomer;
-import resulter.ResultPrinter;
-import numbershandler.selector.UserNumbersSelector;
+import numbers.draw.NumbersDrawer;
+import print.MessagesPrinter;
+import result.ResultChecker;
+import input.InputReceiverScanner;
+import welcome.UserWelcomer;
+import result.ResultPrinter;
+import numbers.select.UserNumbersSelector;
 
 import java.util.Set;
 
 public class GameService {
 
-    UserWelcomer userWelcomer = new UserWelcomer();
-    UserNumbersSelector userNumbersSelector = new UserNumbersSelector();
+    UserWelcomer userWelcomer = new UserWelcomer(new InputReceiverScanner(), new MessagesPrinter());
+    UserNumbersSelector userNumbersSelector = new UserNumbersSelector(new InputReceiverScanner(), new MessagesPrinter());
     NumbersDrawer drawNumbers = new NumbersDrawer();
     ResultChecker resultChecker = new ResultChecker();
-    ResultPrinter resultPrinter = new ResultPrinter();
+    ResultPrinter resultPrinter = new ResultPrinter(new MessagesPrinter());
 
     public void operateGame() {
         userWelcomer.welcomeAndWaitForUserToStart();

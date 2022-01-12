@@ -1,4 +1,4 @@
-package resulter;
+package result;
 
 import java.util.Set;
 

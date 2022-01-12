@@ -1,4 +1,4 @@
-package numbershandler.drawer;
+package numbers.draw;
 
 import java.util.Set;
 import java.util.TreeSet;

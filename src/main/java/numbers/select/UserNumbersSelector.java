@@ -1,8 +1,7 @@
-package numbershandler.selector;
+package numbers.select;
 
 import api.InputReceiver;
-import printer.MessagesPrinter;
-import scanner.InputReceiverScanner;
+import api.Printable;
 
 import java.util.InputMismatchException;
 import java.util.Set;
@@ -13,10 +12,12 @@ import static configuration.MessagesConfiguration.*;
 
 public class UserNumbersSelector {
 
-    InputReceiver inputReceiver = new InputReceiverScanner();
-    private final MessagesPrinter messagesPrinter = new MessagesPrinter();
+    InputReceiver inputReceiver;
+    private final Printable printable;
 
-    public UserNumbersSelector() {
+    public UserNumbersSelector(InputReceiver inputReceiver, Printable printable) {
+        this.inputReceiver = inputReceiver;
+        this.printable = printable;
     }
 
     static class InputResult {
@@ -34,19 +35,21 @@ public class UserNumbersSelector {
         int actualInputNumber = 1;
 
         while (selectedUserNumbers.size() < AMOUNT_OF_NUMBERS) {
-            messagesPrinter.sendMessageToUser(WRITE_NUMBER + actualInputNumber + ":");
+            printable.sendMessageToUser(WRITE_NUMBER + actualInputNumber + ":");
             InputResult inputResult = takeUserInput();
 
             if (inputResult.inputError) {
-                messagesPrinter.sendMessageToUser(INPUT_ERROR);
+                printable.sendMessageToUser(INPUT_ERROR);
             } else {
                 if (isTypedNumberIsOutOfRange(inputResult.typedNumber)) {
-                    messagesPrinter.sendMessageToUser(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
-                } else if (isTypedNumberSelectedBefore(inputResult.typedNumber, selectedUserNumbers)) {
-                    messagesPrinter.sendMessageToUser(NUMBER_SELECTED_BEFORE);
+                    printable.sendMessageToUser(NUMBER_SELECTED_OUT_OF_RANGE + LOWEST_NUMBER + "-" + HIGHEST_NUMBER + TRY_AGAIN);
                 } else {
                     selectedUserNumbers.add(inputResult.typedNumber);
-                    actualInputNumber++;
+                    if (selectedUserNumbers.size() < actualInputNumber) {
+                        printable.sendMessageToUser(NUMBER_SELECTED_BEFORE);
+                    } else {
+                        actualInputNumber++;
+                    }
                 }
             }
         }

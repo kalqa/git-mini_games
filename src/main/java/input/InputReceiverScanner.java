@@ -1,4 +1,4 @@
-package scanner;
+package input;
 
 import api.InputReceiver;
 
@@ -6,7 +6,11 @@ import java.util.Scanner;
 
 public class InputReceiverScanner implements InputReceiver {
 
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
+
+    public InputReceiverScanner() {
+    }
+
     @Override
     public int nextInt() {
         return scanner.nextInt();
